@@ -1,0 +1,6 @@
+gateway:
+  enabled: true
+  tls:
+    enabled: true
+dashboard:
+  enabled: true

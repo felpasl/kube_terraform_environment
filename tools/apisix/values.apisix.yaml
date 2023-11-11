@@ -4,3 +4,8 @@ gateway:
     enabled: true
 dashboard:
   enabled: true
+ingress-controller:
+  enabled: true
+  config:
+    kubernetes:
+      enableGatewayAPI: false

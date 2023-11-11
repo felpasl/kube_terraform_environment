@@ -66,3 +66,28 @@ resource "kubernetes_service" "whoaim" {
     }
   }
 }
+
+resource "kubernetes_manifest" "whoaim" {
+  manifest = yamldecode( <<EOF
+  apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    name: whoaim-ingress
+    namespace: ingress-apisix
+  spec:
+    # we use APISIX Ingress and it watches Ingress resources with "apisix" ingressClassName
+    ingressClassName: apisix
+    rules:
+    - host: 
+      http:
+        paths:
+        - backend:
+            service:
+              name: whoami
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+    EOF
+  )
+}

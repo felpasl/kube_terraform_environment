@@ -30,6 +30,14 @@ terraform will perform actions against kubernetes using current context
 
 ## Run in Pipeline
 
+`pipeline.variables.tfvars` sample:
+```
+kubed_enabled = "$(KUBED_ENABLED)"
+apisix_enabled = "$(APISIX_ENABLED)"
+kafka_ui_enabled = "$(KAFKA_UI_ENABLED)"
+sa_password = "$(SA_PASSWORD)"
+```
+
 `terraform workspace select <name>`
 
 `terraform plan -var-file pipeline.variables.tfvars  -out out.file` - create a Change Plan to Approval, This File can be used as input to the "apply" command.

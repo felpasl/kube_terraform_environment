@@ -1,11 +1,11 @@
-variable "backend_name" {
-    description = "value of backend name"
-    default = "backend-env-1"  
-}
-
 variable "kubed_enabled" {
     description = "value of kubed_enabled"
     default = true  
+}
+
+variable "sa_password" {
+    type = string  
+    default = "Sa@123456"
 }
 
 variable "apisix_enabled" {
@@ -16,4 +16,14 @@ variable "apisix_enabled" {
 variable "kafka_ui_enabled" {
     description = "value of kafka_ui_enabled"
     default = true    
+}
+
+variable "kafka_username" {
+    description = "value of kafka_username"
+    default = "user1"      
+}
+
+variable "kafka_password" {
+    description = "value of kafka_password"
+    default = "pass1"  
 }

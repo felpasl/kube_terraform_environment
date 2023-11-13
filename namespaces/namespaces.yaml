@@ -1,0 +1,5 @@
+labels:
+  istio-injection: enabled
+namespaces:
+  - name: app1
+  - name: app2

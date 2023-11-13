@@ -1,0 +1,4 @@
+## Namespace Labels
+labels:
+  istio-injection: enabled
+  base: env

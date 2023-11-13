@@ -10,6 +10,10 @@ variable "kubed_enabled" {
 
 variable "apisix_enabled" {
     description = "value of apisix_enabled"
-    default = true  
-  
+    default = true    
+}
+
+variable "kafka_ui_enabled" {
+    description = "value of kafka_ui_enabled"
+    default = true    
 }

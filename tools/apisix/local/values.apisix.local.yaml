@@ -1,6 +1,8 @@
 apisix:
   ssl: 
     enabled: true
+    containerPort: 443
+
 service:
   type: LoadBalancer
   tls:
@@ -11,6 +13,7 @@ ingress-controller:
   enabled: true
   config:
     apisix:
+      adminAPIVersion: "v3"
       serviceNamespace: ingress-apisix
     kubernetes:
       enableGatewayAPI: false

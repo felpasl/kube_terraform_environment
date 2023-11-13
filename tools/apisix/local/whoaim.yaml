@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whoaim
+spec:
+  selector:
+    matchLabels:
+      app: whoaim
+  template:
+    metadata:
+      labels:
+        app: whoaim
+    spec:
+      containers:
+      - name: whoaim
+        image: containous/whoami
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoaim
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: whoaim
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: whoaim
+  labels:
+    name: whoaim
+spec:
+  ingressClassName: apisix
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /whoaim*
+        backend:
+          service:
+            name: whoaim
+            port: 
+              number: 80

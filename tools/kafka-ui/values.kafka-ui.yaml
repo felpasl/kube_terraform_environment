@@ -1,0 +1,8 @@
+envs:
+  config:
+    SERVER_SERVLET_CONTEXT_PATH: /kafka-ui
+    KAFKA_CLUSTERS_0_NAME: env-1
+    KAFKA_CLUSTERS_0_PROPERTIES_SASL_MECHANISM: PLAIN
+    KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: SASL_PLAINTEXT
+yamlApplicationConfig:
+  dynamic.config.enabled: true

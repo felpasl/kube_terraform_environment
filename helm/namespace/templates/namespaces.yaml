@@ -1,0 +1,13 @@
+{{ $fullname := include "namespace.name" . }}
+{{ $labels := include "namespace.labels" . }}
+
+{{- range $namespace := .Values.namespaces}}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ $.Release.Name }}-{{$namespace.name}}
+  labels:
+    {{- $labels | nindent 4 }}
+    {{- toYaml $.Values.labels | nindent 4 }}
+{{- end}}

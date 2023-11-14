@@ -8,6 +8,7 @@ resource "kubernetes_namespace" "apisix" {
 // install gateway CRD https://github.com/kubernetes-sigs/gateway-api/releases
 
 resource "helm_release" "apisix" {
+  depends_on = [ kubernetes_namespace.apisix ]
   chart      = "apisix"
   name       = "apisix"
   repository = "https://charts.apiseven.com"
@@ -29,6 +30,8 @@ resource "kubernetes_secret" "tlsSecret" {
     "tls.key" = "${var.key}"
   }
 }
+
+// Change to kubectl_manifest because of https://github.com/hashicorp/terraform-provider-kubernetes/issues/1367
 
 resource "kubernetes_manifest" "tlsSecret" {
   count = "${var.apisix_enabled}" ? 1 : 0

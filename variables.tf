@@ -27,3 +27,14 @@ variable "kafka_password" {
     description = "value of kafka_password"
     default = "pass1"  
 }
+
+variable "istio_enabled" {
+    description = "value of istio_enabled"
+    default = true  
+}
+
+variable "jaeger_enabled" {
+    description = "value of jaeger_enabled"
+    default = true  
+  
+}

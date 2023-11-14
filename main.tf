@@ -1,5 +1,16 @@
 terraform {
   required_version = ">= 0.12"
+  required_providers {
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+    }
+    helm = {
+      source = "hashicorp/helm"
+    }
+    kubectl = {
+      source = "gavinbunney/kubectl"
+    }
+  }
 }
 
 module "localdb" {
@@ -31,4 +42,9 @@ module "kafka-ui" {
 
 module "namespaces" {
   source = "./tools/namespaces"
+}
+
+module "istio" {
+  source        = "./tools/istio"
+  istio_enabled = var.istio_enabled
 }

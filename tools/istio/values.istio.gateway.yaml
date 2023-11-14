@@ -1,0 +1,3 @@
+service:
+  # Egress gateways do not need an external LoadBalancer IP
+  type: ClusterIP

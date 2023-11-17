@@ -2,11 +2,23 @@ apisix:
   ssl: 
     enabled: true
 service:
-  type: LoadBalancer
+  type: NodePort #LoadBalancer
+  http:
+    servicePort: 80
+    nodePort: 31734
   tls:
+    servicePort: 443
+    nodePort: 31440
     enabled: true
 dashboard:
   enabled: true
+  ingress:
+    enabled: true
+    className: apisix
+    hosts:
+      - host: #sisfolha-dev.intranet.policiamilitar.sp.gov.br
+        paths:
+          - /apisix-dashboard
 ingress-controller:
   enabled: true
   config:
@@ -14,3 +26,6 @@ ingress-controller:
       serviceNamespace: ingress-apisix
     kubernetes:
       enableGatewayAPI: false
+etcd:
+  persistence:
+    size: 1Gi

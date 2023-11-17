@@ -31,3 +31,8 @@ podSecurityContext:
 
 service:
   port: 1433
+
+persistence:
+  accessMode:
+  - ReadWriteOnce
+  size: 8Gi

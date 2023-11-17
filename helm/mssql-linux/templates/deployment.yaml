@@ -53,11 +53,11 @@ spec:
         configMap:
          name: mssql
   volumeClaimTemplates:
-    - metadata:
-       name: mssql
-      spec:
-       accessModes:
-       - ReadWriteOnce
-       resources:
+  - metadata:
+      name: mssql
+    spec:
+      accessModes:
+      {{- toYaml .Values.storage.accessMode | nindent 6 }}
+      resources:
         requests:
-         storage: 8Gi
+          storage: "{{.Values.storage.size}}"

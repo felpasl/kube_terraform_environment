@@ -1,9 +1,11 @@
 resource "kubernetes_namespace" "kafka" {
+  count = var.kafka_enabled ? 1 : 0
   metadata {
     name = "${terraform.workspace}-kafka"
   }
 }
 resource "helm_release" "kafka" {
+  count = var.kafka_enabled ? 1 : 0
   depends_on = [kubernetes_namespace.kafka]
   chart      = "kafka"
   name       = "kafka"
@@ -18,10 +20,11 @@ resource "helm_release" "kafka" {
     value = var.kafka_0_password
   }
   values    = ["${file("${path.module}/values.kafka.yaml")}"]
-  namespace = kubernetes_namespace.kafka.metadata.0.name
+  namespace = kubernetes_namespace.kafka[0].metadata.0.name
 }
 
 resource "kubernetes_secret" "kafkaSecret" {
+  count = var.kafka_enabled ? 1 : 0
   metadata {
     name      = "kafka-secret"
     namespace = "default"

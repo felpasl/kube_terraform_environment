@@ -1,5 +1,5 @@
 apisix:
-  ssl: 
+  ssl:
     enabled: true
 service:
   type: LoadBalancer
@@ -14,3 +14,6 @@ ingress-controller:
       serviceNamespace: ingress-apisix
     kubernetes:
       enableGatewayAPI: false
+etcd:
+  persistence:
+    size: 1Gi

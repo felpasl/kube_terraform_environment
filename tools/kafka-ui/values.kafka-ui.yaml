@@ -6,3 +6,10 @@ envs:
     KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: SASL_PLAINTEXT
 yamlApplicationConfig:
   dynamic.config.enabled: true
+resources:
+  limits:
+    cpu: 500m
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 256Mi

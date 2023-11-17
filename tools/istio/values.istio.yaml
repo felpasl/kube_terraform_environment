@@ -1,0 +1,7 @@
+pilot:
+  autoscaleEnabled: true
+  autoscaleMin: 2
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi

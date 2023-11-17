@@ -1,6 +1,13 @@
 apisix:
   ssl:
     enabled: true
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 500Mi
 service:
   type: NodePort #LoadBalancer
   http:
@@ -17,6 +24,13 @@ dashboard:
       - host:
         paths:
           - /*
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi
 ingress-controller:
   enabled: true
   config:
@@ -24,6 +38,20 @@ ingress-controller:
       serviceNamespace: ingress-apisix
     kubernetes:
       enableGatewayAPI: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi
 etcd:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
   persistence:
     size: 1Gi

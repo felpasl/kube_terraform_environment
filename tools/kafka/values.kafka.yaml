@@ -1,4 +1,3 @@
-
 listeners:
   ## @param listeners.client.name Name for the Kafka client listener
   ## @param listeners.client.containerPort Port for the Kafka client listener
@@ -18,3 +17,10 @@ tls:
 controller:
   persistence:
     size: 2Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi

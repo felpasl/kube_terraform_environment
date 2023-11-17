@@ -19,6 +19,21 @@ resource "helm_release" "mssql" {
         name  = "SA_PASSWORD.secretKey"
         value = "SA_PASSWORD"
     }
+    dynamic set {
+      for_each = var.localdb_resources
+      content {
+        name  = "resources.${set.key}.cpu"
+        value = set.value["cpu"]
+      }      
+    } 
+       
+    dynamic set {
+      for_each = var.localdb_resources
+      content {
+        name  = "resources.${set.key}.memory"
+        value = set.value["memory"]
+      }      
+    }
 }
 
 resource "kubernetes_secret_v1" "mssql" {

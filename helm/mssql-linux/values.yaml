@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicas: 3
+replicas: 2
 
 image:
   repository: mcr.microsoft.com/mssql/server
@@ -36,3 +36,5 @@ persistence:
   accessMode:
     - ReadWriteOnce
   size: 2Gi
+
+resources: {}

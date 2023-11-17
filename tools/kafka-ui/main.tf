@@ -6,6 +6,8 @@ resource "helm_release" "kafka-ui" {
   repository = "https://provectus.github.io/kafka-ui-charts"
   name       = "kafka-ui"
   namespace  = "${terraform.workspace}-kafka"
+  values = ["${file("${path.module}/values.kafka-ui.yaml")}"]
+  
   set {
     name  = "ingress.enabled"
     value = "true"
@@ -13,6 +15,10 @@ resource "helm_release" "kafka-ui" {
   set {
     name  = "ingress.ingressClassName"
     value = "apisix"
+  }
+  set {
+    name = "envs.config.KAFKA_CLUSTERS_0_NAME"
+    value = "${terraform.workspace}"
   }
   set {
     name  = "ingress.path"
@@ -28,5 +34,4 @@ resource "helm_release" "kafka-ui" {
     value = "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"${var.kafka_0_username}\" password=\"${var.kafka_0_password}\";"
   }
 
-  values = ["${file("${path.module}/values.kafka-ui.yaml")}"]
 }

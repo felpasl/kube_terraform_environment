@@ -16,7 +16,7 @@ dashboard:
     hosts:
       - host:
         paths:
-          - /
+          - /*
 ingress-controller:
   enabled: true
   config:

@@ -57,7 +57,7 @@ spec:
       name: mssql
     spec:
       accessModes:
-      {{- toYaml .Values.storage.accessMode | nindent 6 }}
+      {{- toYaml .Values.persistence.accessMode | nindent 6 }}
       resources:
         requests:
-          storage: "{{.Values.storage.size}}"
+          storage: "{{.Values.persistence.size}}"

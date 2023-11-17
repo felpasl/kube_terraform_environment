@@ -1,12 +1,12 @@
 variable "apisix_enabled" {
   description = "value of apisix_enabled"
-  default = true    
+  default     = true
 }
 
 // Localhost Self-Signed Certificate for testPropose
 variable "crt" {
   description = "value of apisix_crt"
-  default = <<EOF
+  default     = <<EOF
 -----BEGIN CERTIFICATE-----
 MIID5zCCAs+gAwIBAgIUTjz0I2fD/HyIteQeJzcjoly657MwDQYJKoZIhvcNAQEL
 BQAwgYIxCzAJBgNVBAYTAkJSMQswCQYDVQQIDAJTUDELMAkGA1UEBwwCU1AxEjAQ
@@ -36,7 +36,7 @@ EOF
 // Localhost Self-Signed Certificate for testPropose
 variable "key" {
   description = "value of apisix_key"
-  default = <<EOF
+  default     = <<EOF
 -----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC1eeB+h9r5Ssbc
 bxstFE3eYluI6XHUnpD+nzlOrETKoPvAizmytIsi+TcHiU62WTRcqVJRoC/rgiYp
@@ -71,6 +71,30 @@ PKKe8PujWkf1p7mtx00pfbc=
 // List of hosts for TLS
 variable "tls_hosts" {
   description = "value of tls hosts"
-  type = list(string)
-  default = ["localhost"]  
+  type        = list(string)
+  default     = ["localhost"]
+}
+
+variable "apisix" {
+  type = object({
+    dashboard_host       = string
+    gateway_service_type = string
+    nodeport_http        = number
+    nodeport_https       = number
+    user = object({
+      username = string
+      password = string
+    })
+  })
+
+  default = {
+    dashboard_host       = "apisix.localhost"
+    gateway_service_type = "LoadBalancer"
+    nodeport_http        = 31734
+    nodeport_https       = 31440
+    user = {
+      username = "admin"
+      password = "admin"
+    }
+  }
 }

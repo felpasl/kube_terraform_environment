@@ -15,6 +15,10 @@ resource "helm_release" "mssql" {
         name  = "SA_PASSWORD.secretName"
         value = "${terraform.workspace}-mssql"
     }
+    set {
+        name  = "SA_PASSWORD.secretKey"
+        value = "SA_PASSWORD"
+    }
 }
 
 resource "kubernetes_secret_v1" "mssql" {

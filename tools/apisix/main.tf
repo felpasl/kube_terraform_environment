@@ -14,6 +14,22 @@ resource "helm_release" "apisix" {
   repository = "https://charts.apiseven.com"
   namespace  = "ingress-apisix"
   values     = ["${file("${path.module}/values.apisix.yaml")}"]
+  set {
+    name  = "dashboard.ingress.hosts[0].host"
+    value = var.apisix.dashboard_host
+  }
+  set {
+    name  = "service.type"
+    value = var.apisix.gateway_service_type
+  }
+  set {
+    name  = "service.http.nodePort"
+    value = var.apisix.nodeport_http
+  }
+  set {
+    name  = "service.tls.nodePort"
+    value = var.apisix.nodeport_https
+  }
 }
 
 resource "kubernetes_secret" "tlsSecret" {

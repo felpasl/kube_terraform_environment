@@ -5,10 +5,8 @@ service:
   type: NodePort #LoadBalancer
   http:
     servicePort: 80
-    nodePort: 31734
   tls:
     servicePort: 443
-    nodePort: 31440
     enabled: true
 dashboard:
   enabled: true
@@ -16,9 +14,9 @@ dashboard:
     enabled: true
     className: apisix
     hosts:
-      - host: #sisfolha-dev.intranet.policiamilitar.sp.gov.br
+      - host:
         paths:
-          - /apisix-dashboard
+          - /
 ingress-controller:
   enabled: true
   config:

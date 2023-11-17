@@ -34,5 +34,5 @@ service:
 
 persistence:
   accessMode:
-  - ReadWriteOnce
-  size: 8Gi
+    - ReadWriteOnce
+  size: 2Gi

@@ -15,6 +15,7 @@ terraform {
 
 module "localdb" {
   source      = "./tools/localdb"
+  localdb_enabled = var.localdb_enabled
   sa_password = var.sa_password
 }
 
@@ -30,6 +31,7 @@ module "apisix" {
 
 module "kafka" {
   source           = "./tools/kafka"
+  kafka_enabled    = var.kafka_enabled
   kafka_0_username = var.kafka_username
   kafka_0_password = var.kafka_password
 }

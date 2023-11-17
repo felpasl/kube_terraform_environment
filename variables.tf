@@ -35,15 +35,15 @@ variable "istio_enabled" {
 
 variable "jaeger_enabled" {
     description = "value of jaeger_enabled"
-    default = true
-}
-
-variable "localdb_enabled" {
-    description = "value of localdb_enabled"
-    default = false
+    default = true    
 }
 
 variable "kafka_enabled" {
     description = "value of kafka_enabled"
-    default = false
+    default = true      
+}
+
+variable "localdb_enabled" {
+    description = "value of localdb_enabled"
+    default = true        
 }

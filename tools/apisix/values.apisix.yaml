@@ -1,5 +1,5 @@
 apisix:
-  ssl: 
+  ssl:
     enabled: true
 service:
   type: NodePort #LoadBalancer

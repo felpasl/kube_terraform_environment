@@ -51,3 +51,8 @@ module "istio" {
   source        = "./tools/istio"
   istio_enabled = var.istio_enabled
 }
+
+module "keycloak" {
+  source        = "./tools/keycloak"
+  keycloak_enabled = var.keycloak_enabled
+}

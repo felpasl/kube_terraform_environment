@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-spa
+spec:
+  selector:
+    matchLabels:
+      app: sample-spa
+  template:
+    metadata:
+      labels:
+        app: sample-spa
+    spec:
+      containers:
+        - name: sample-spa
+          image: alexxxnf/spa-docker-example
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-spa
+spec:
+  selector:
+    app: sample-spa
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sample-spa
+  labels:
+    name: sample-spa
+spec:
+  ingressClassName: apisix
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: sample-spa
+                port:
+                  number: 80

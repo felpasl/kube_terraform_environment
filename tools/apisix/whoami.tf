@@ -65,7 +65,7 @@ resource "kubernetes_manifest" "whoaim" {
               name: whoami
               port:
                 number: 80
-          path: /woaim
+          path: /whoami
           pathType: Prefix
     EOF
   )

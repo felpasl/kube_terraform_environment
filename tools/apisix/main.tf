@@ -2,6 +2,9 @@ resource "kubernetes_namespace" "apisix" {
   count = "${var.apisix_enabled}" ? 1 : 0
   metadata {
     name = "ingress-apisix"
+    labels = {
+      istio-injection: enabled
+    }
   }
 }
 

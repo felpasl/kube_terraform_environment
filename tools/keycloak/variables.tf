@@ -20,7 +20,7 @@ variable "keycloak" {
   })
 
   default = {
-    ingress_class_type = "kong"
+    ingress_class_type = "apisix"
     production = false
     admin = {
       username = "admin"

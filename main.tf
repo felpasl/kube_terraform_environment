@@ -28,6 +28,9 @@ module "apisix" {
   source         = "./tools/apisix"
   apisix_enabled = var.apisix_enabled
   apisix = var.apisix
+  key = var.apisix_key
+  crt = var.apisix_crt
+  tls_hosts = var.apisix_tls_hosts
 }
 
 module "kafka" {

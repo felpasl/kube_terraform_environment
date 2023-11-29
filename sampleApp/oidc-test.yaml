@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oidc-test
+spec:
+  selector:
+    matchLabels:
+      app: oidc-test
+  template:
+    metadata:
+      labels:
+        app: oidc-test
+    spec:
+      containers:
+        - name: oidc-test
+          image: ghcr.io/beryju/oidc-test-client
+          env:
+            - name: OIDC_CLIENT_ID
+              value: "oidc-test"
+            - name: OIDC_CLIENT_SECRET
+              value: "oidc-test"
+            - name: OIDC_PROVIDER
+              value: "http://keycloak.env-1-keycloak/auth/realms/master"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 9009
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oidc-test
+spec:
+  selector:
+    app: oidc-test
+  ports:
+    - port: 80
+      targetPort: 9009
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oidc-test
+  labels:
+    name: oidc-test
+spec:
+  ingressClassName: apisix
+  rules:
+    - host: oidc.localhost
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: oidc-test
+                port:
+                  number: 80

@@ -1,6 +1,16 @@
 apisix:
   ssl:
     enabled: true
+  nginx:
+    configurationSnippet:
+      httpStart: |
+        proxy_buffer_size 128k;
+        proxy_buffers 32 128k;
+        proxy_busy_buffers_size 128k;
+      httpSrv: |
+        proxy_buffer_size 128k;
+        proxy_buffers 32 128k;
+        proxy_busy_buffers_size 128k;
 resources:
   requests:
     cpu: 100m

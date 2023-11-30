@@ -1,0 +1,12 @@
+{{if .Values.redirect.enable}}
+apiVersion: apisix.apache.org/v2
+kind: ApisixGlobalRule
+metadata:
+  name: redirect-to-https
+spec:
+  plugins:
+  - name: redirect
+    enable: true
+    config:
+      http_to_https: true
+{{end}}

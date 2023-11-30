@@ -3,7 +3,7 @@ resource "kubernetes_namespace" "apisix" {
   metadata {
     name = "ingress-apisix"
     labels = {
-      istio-injection: enabled
+      "istio-injection": "enabled"
     }
   }
 }

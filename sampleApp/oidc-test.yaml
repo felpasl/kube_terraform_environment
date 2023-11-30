@@ -11,22 +11,33 @@ spec:
       labels:
         app: oidc-test
     spec:
+      volumes:
+        - name: data-protection
+          persistentVolumeClaim:
+            claimName: data-protection
       containers:
         - name: oidc-test
-          image: ghcr.io/beryju/oidc-test-client
+          image: ghcr.io/theanaoliveira/keycloakauth:releases-demo
+          imagePullPolicy: Always
           env:
-            - name: OIDC_CLIENT_ID
-              value: "oidc-test"
-            - name: OIDC_CLIENT_SECRET
-              value: "oidc-test"
-            - name: OIDC_PROVIDER
-              value: "http://keycloak.env-1-keycloak/auth/realms/master"
+            - name: KEYCLOAK_SERVER_URL
+              value: http://keycloak.localhost/keycloak
+            - name: KEYCLOAK_REALM
+              value: master
+            - name: BASE_PATH
+              value: /oidc
+          envFrom:
+            - secretRef:
+                name: oidc-secrets
           resources:
             limits:
               memory: "128Mi"
               cpu: "500m"
           ports:
-            - containerPort: 9009
+            - containerPort: 80
+          volumeMounts:
+            - name: data-protection
+              mountPath: /app/keys
 ---
 apiVersion: v1
 kind: Service
@@ -37,7 +48,7 @@ spec:
     app: oidc-test
   ports:
     - port: 80
-      targetPort: 9009
+      targetPort: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -48,13 +59,108 @@ metadata:
 spec:
   ingressClassName: apisix
   rules:
-    - host: oidc.localhost
+    - host: localhost
       http:
         paths:
           - pathType: Prefix
-            path: "/"
+            path: "/oidc"
             backend:
               service:
                 name: oidc-test
                 port:
                   number: 80
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oidc-test2
+spec:
+  selector:
+    matchLabels:
+      app: oidc-test2
+  template:
+    metadata:
+      labels:
+        app: oidc-test2
+    spec:
+      volumes:
+        - name: data-protection
+          persistentVolumeClaim:
+            claimName: data-protection
+      containers:
+        - name: oidc-test2
+          image: ghcr.io/theanaoliveira/keycloakauth:releases-demo
+          imagePullPolicy: Always
+          env:
+            - name: KEYCLOAK_SERVER_URL
+              value: http://keycloak.localhost/keycloak
+            - name: KEYCLOAK_REALM
+              value: master
+            - name: BASE_PATH
+              value: /otherapi
+          envFrom:
+            - secretRef:
+                name: oidc-secrets
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: data-protection
+              mountPath: /app/keys
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oidc-test2
+spec:
+  selector:
+    app: oidc-test2
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oidc-test2
+  labels:
+    name: oidc-test2
+spec:
+  ingressClassName: apisix
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/otherapi"
+            backend:
+              service:
+                name: oidc-test2
+                port:
+                  number: 80
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: data-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2M
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: oidc-secrets
+type: Opaque
+stringData:
+  CLIENT_ID: api1
+  CLIENT_SECRET: w1BNuwx5GoPmZHExRNQVf1M4hApKtWAG
+  ENCRYPTION_KEY: l8erjrKYzmTrk7gIUqNvho3LwuX7faYoXzzUkLLmvF0=
+  SIGN_KEY: LpaRsZTmQkPSBf18Hp8U4LRGokXObHE6iybEsNcpbk4=

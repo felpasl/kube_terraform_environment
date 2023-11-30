@@ -83,7 +83,7 @@ PKKe8PujWkf1p7mtx00pfbc=
 variable "apisix_tls_hosts" {
   description = "value of tls hosts"
   type        = list(string)
-  default     = ["localhost"]
+  default     = [ "localhost", "apisix.localhost", "keycloak.localhost" ]
 }
 
 variable "kafka_ui_enabled" {

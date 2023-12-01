@@ -60,3 +60,9 @@ module "keycloak" {
   keycloak_enabled = var.keycloak_enabled
   keycloak = var.keycloak
 }
+
+module "sonarqube" {
+  source        = "./tools/sonarqube"
+  sonarqube_enabled = var.sonarqube_enabled
+  sonarqube_sqlserver = var.sonarqube_sqlserver
+}

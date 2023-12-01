@@ -10,5 +10,6 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
+  type: {{ .Values.service.type }}
   selector:
     {{- include "sql-statefull-deploy.selectorLabels" . | nindent 4 }}

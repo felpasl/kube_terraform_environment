@@ -1,6 +1,6 @@
 variable "kubed_enabled" {
   description = "value of kubed_enabled"
-  default     = true
+  default     = false
 }
 
 variable "sa_password" {
@@ -88,7 +88,7 @@ variable "apisix_tls_hosts" {
 
 variable "kafka_ui_enabled" {
   description = "value of kafka_ui_enabled"
-  default     = true
+  default     = false
 }
 
 variable "kafka_username" {
@@ -103,17 +103,17 @@ variable "kafka_password" {
 
 variable "istio_enabled" {
   description = "value of istio_enabled"
-  default     = true
+  default     = false
 }
 
 variable "jaeger_enabled" {
   description = "value of jaeger_enabled"
-  default     = true
+  default     = false
 }
 
 variable "kafka_enabled" {
   description = "value of kafka_enabled"
-  default     = true
+  default     = false
 }
 
 variable "localdb_enabled" {
@@ -179,5 +179,28 @@ variable "keycloak" {
       db_pass = "dbkeycloakpass"
       postgres_pass = "keycloak"
     }
+  }
+}
+
+variable "sonarqube_enabled" {
+  description = "value of sonarqube_enabled"
+  default     = true
+}
+
+variable "sonarqube_sqlserver" {
+  type = object({
+    jdbc = object({
+      db_url   = string
+      db_user  = string
+      db_pass  = string
+    })
+  })
+
+  default = {
+    jdbc = ({
+      db_url   = "jdbc:sqlserver://dev-mssql-sql-statefull-deploy.dev-db;databaseName=sonarqube;encrypt=false"
+      db_user  = "sa"
+      db_pass  = "Sa@123456"
+    })
   }
 }

@@ -1,6 +1,14 @@
 # Config Database
 
-After create a new database, verify if the Collation is equal SQL_Latin1_General_CP1_CS_AS, if not, change with the command:
+After create the database, verify if the COLLATE is equal to SQL_Latin1_General_CP1_CS_AS, if not, change with the command: <br />
 
-USE DATABASE;
+
+## Select database
+``` sql
+USE DATABASE; 
+```
+
+## Alter current database
+``` sql
 ALTER DATABASE CURRENT COLLATE SQL_Latin1_General_CP1_CS_AS;
+```

@@ -1,6 +1,9 @@
 apisix:
+  enableServerTokens: false
+  show_upstream_status_in_response_header: false
   ssl:
     enabled: true
+    containerPort: 433
   nginx:
     configurationSnippet:
       httpStart: |
@@ -11,6 +14,10 @@ apisix:
         proxy_buffer_size 128k;
         proxy_buffers 32 128k;
         proxy_busy_buffers_size 128k;
+  pluginAttrs:
+    redirect:
+      https_port: 443
+
 resources:
   requests:
     cpu: 100m

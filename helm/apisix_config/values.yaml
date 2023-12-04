@@ -1,3 +1,19 @@
 # redirect to https
 redirect:
   enable: false
+ratelimit:
+  enable: true
+  rate: 15 # Threshold for number of requests per second. Requests exceeding this rate (and below burst) will be delayed to match this rate.
+  burst: 5 # Number of additional requests allowed to be delayed per second. If the number of requests exceeds this hard limit, they will get rejected immediately.
+  key: "remote_addr"
+cors:
+  enable: false
+  config:
+    allow_origins: "**"
+    allow_methods: "**"
+    expose_headers: "**"
+    allow_headers: Accept,Accept-Version,Content-Length,Content-MD5,Content-Type,Date,Authorization,Access-Control-Allow-Headers,Access-Control-Allow-Origin
+    allow_credential: true
+    allow_origins_by_regex:
+      - ".*\\.localhost$"
+      - "localhost$"

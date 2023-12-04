@@ -10,6 +10,9 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "2022-latest"
 
+SQLCOLLATION:
+  value: "SQL_Latin1_General_CP1_CS_AS"
+
 ACCEPT_EULA:
   value: "y"
 MSSQL_PID:

@@ -1,25 +1,13 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: response-remove-headers
+  name: response-add-headers
   namespace: ingress-apisix
 spec:
   workloadSelector:
     labels:
       app.kubernetes.io/name: apisix
   configPatches:
-    - applyTo: NETWORK_FILTER
-      match:
-        listener:
-          filterChain:
-            filter:
-              name: "envoy.filters.network.http_connection_manager"
-      patch:
-        operation: MERGE
-        value:
-          typed_config:
-            "@type": "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager"
-            server_header_transformation: PASS_THROUGH
     - applyTo: ROUTE_CONFIGURATION
       patch:
         operation: MERGE
@@ -46,23 +34,3 @@ spec:
                 key: strict-transport-security
                 value: "max-age=31536000; preload"
               append: false
-
----
-apiVersion: networking.istio.io/v1alpha3
-kind: EnvoyFilter
-metadata:
-  name: remove-bad-response-headers
-  namespace: ingress-apisix
-spec:
-  workloadSelector:
-    labels:
-      app.kubernetes.io/name: apisix
-  configPatches:
-    - applyTo: HTTP_ROUTE
-      match:
-        context: SIDECAR_INBOUND
-      patch:
-        operation: MERGE
-        value:
-          decorator:
-            propagate: false

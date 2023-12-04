@@ -11,12 +11,15 @@ ingress:
 plugins:
   install: 
     - https://github.com/vaulttec/sonar-auth-oidc/releases/download/v2.1.1/sonar-auth-oidc-plugin-2.1.1.jar
+    - https://github.com/felpasl/sonarqube-community-branch-plugin/releases/download/1.15.0/sonarqube-community-branch-plugin-1.15.0.jar
 
-persistence:
-  size: 1Gi
+# jvmOpts: "-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.15.0.jar=web"
+# jvmCeOpts: "-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.15.0.jar=ce"    
 
 postgresql:
   enabled: false
+  persistence:
+    size: 3Gi
 
 jdbcOverwrite:
   enable: true

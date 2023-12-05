@@ -10,6 +10,7 @@ resource "helm_release" "sonarqube" {
     depends_on = [kubernetes_namespace.sonarqube]
     chart = "sonarqube"
     name = "sonarqube"
+    version = "10.2.1"
     repository = "https://SonarSource.github.io/helm-chart-sonarqube"
     values    = ["${file("${path.module}/values.sonarqube.yaml")}"]
     set {

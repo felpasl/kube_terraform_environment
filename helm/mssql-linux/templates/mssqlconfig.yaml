@@ -2,6 +2,8 @@ kind: ConfigMap
 apiVersion: v1 
 metadata:
   name: mssql
+  annotations:
+    {{- include "sql-statefull-deploy.labels" . | nindent 4 }}
 data:
   mssql.conf: |
     [EULA]
@@ -17,4 +19,14 @@ data:
     
     [language]
     lcid = 1033
-  
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: mssql-init
+  annotations:
+    {{- include "sql-statefull-deploy.labels" . | nindent 4 }}
+data:
+  init.sh: |
+    #!/bin/sh
+    /opt/mssql-tools/bin/sqlcmd -S $SQLHOST -U sa -P $SA_PASSWORD -Q "create database sonarqube collate SQL_Latin1_General_CP1_CS_AS";

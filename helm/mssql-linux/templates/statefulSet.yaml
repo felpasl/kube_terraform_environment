@@ -54,6 +54,7 @@ spec:
                key: "{{.Values.SA_PASSWORD.key}}" 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          
           volumeMounts:
            - name: mssql
              mountPath: "/var/opt/mssql"

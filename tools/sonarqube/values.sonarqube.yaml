@@ -11,21 +11,24 @@ ingress:
 plugins:
   install:
     - https://github.com/vaulttec/sonar-auth-oidc/releases/download/v2.1.1/sonar-auth-oidc-plugin-2.1.1.jar
-    - https://github.com/felpasl/sonarqube-community-branch-plugin/releases/download/1.15.0/sonarqube-community-branch-plugin-1.15.0.jar
+    - https://github.com/iSergio/sonarqube-community-branch-plugin/releases/download/1.16.1/sonarqube-community-branch-plugin-1.16.1-SNAPSHOT.jar
 
 sonar:
   web:
-    javaOpts: "-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.15.0.jar=web"
+    javaOpts: "-Dbootstrap.system_call_filter=false;-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.16.1-SNAPSHOT.jar=web"
   ce:
-    javaOpts: "-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.15.0.jar=ce"
+    javaOpts: "-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.16.1-SNAPSHOT.jar=ce"
 
 postgresql:
   enabled: false
-  persistence:
-    size: 3Gi
 
 jdbcOverwrite:
   enable: true
 
-elasticsearch:
-  bootstrapChecks: false
+resources:
+  limits:
+    cpu: 800m
+    memory: 4Gi
+  requests:
+    cpu: 400m
+    memory: 500M

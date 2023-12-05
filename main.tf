@@ -26,6 +26,7 @@ module "kubed" {
 
 module "apisix" {
   source         = "./tools/apisix"
+  depends_on = [ module.istio ]
   apisix_enabled = var.apisix_enabled
   apisix = var.apisix
   key = var.apisix_key
@@ -59,4 +60,10 @@ module "keycloak" {
   source        = "./tools/keycloak"
   keycloak_enabled = var.keycloak_enabled
   keycloak = var.keycloak
+}
+
+module "sonarqube" {
+  source        = "./tools/sonarqube"
+  sonarqube_enabled = var.sonarqube_enabled
+  sonarqube_sqlserver = var.sonarqube_sqlserver
 }

@@ -1,0 +1,24 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixGlobalRule
+metadata:
+  name: cors
+spec:
+  plugins:
+  - name: cors
+    enable: {{ .Values.cors.enable }}
+    config: 
+      {{ toYaml .Values.cors.config | nindent 6 }}
+  - name: limit-req
+    enable: {{ .Values.ratelimit.enable }}
+    config:
+      rate: {{.Values.ratelimit.rate}}
+      burst: {{.Values.ratelimit.burst}}
+      rejected_code: 503
+      key_type: "var"
+      key: {{.Values.ratelimit.key}}
+      rejected_msg: "API rate limit exceeded"
+      allow_degradation: true
+  - name: redirect
+    enable: {{ .Values.redirect.enable }}
+    config:
+      http_to_https: true

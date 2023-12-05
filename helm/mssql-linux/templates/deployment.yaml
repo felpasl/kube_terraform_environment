@@ -39,6 +39,8 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 30
           env:
+           - name: SQLCOLLATION
+             value: "{{ .Values.SQLCOLLATION.value}}"
            - name: MSSQL_PID
              value: "{{ .Values.MSSQL_PID.value}}"
            - name: ACCEPT_EULA

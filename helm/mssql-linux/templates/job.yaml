@@ -1,0 +1,40 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: {{ include "sql-statefull-deploy.fullname" . }}
+  annotations:
+    {{- include "sql-statefull-deploy.labels" . | nindent 4 }}
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-weight": "1"
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "sql-statefull-deploy.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: {{ .Chart.Name }}-post-install
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ["/bin/sh", '/tmp/init/init.sh']
+        env:
+          - name: SQLHOST
+            value: {{ include "sql-statefull-deploy.fullname" . }}
+          - name: SA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "{{.Values.SA_PASSWORD.secretName}}"
+                key: "{{.Values.SA_PASSWORD.key}}" 
+        volumeMounts:
+          - name: init
+            mountPath: "/tmp/init"
+      volumes:        
+      - name: init
+        configMap:
+         name: mssql-init

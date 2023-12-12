@@ -30,3 +30,4 @@ data:
   init.sh: |
     #!/bin/sh
     /opt/mssql-tools/bin/sqlcmd -S $SQLHOST -U sa -P $SA_PASSWORD -Q "create database sonarqube collate SQL_Latin1_General_CP1_CS_AS";
+    /opt/mssql-tools/bin/sqlcmd -S $SQLHOST -U sa -P $SA_PASSWORD -Q "create database keycloak";

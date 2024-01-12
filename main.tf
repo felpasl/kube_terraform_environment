@@ -67,3 +67,8 @@ module "sonarqube" {
   sonarqube_enabled = var.sonarqube_enabled
   sonarqube_sqlserver = var.sonarqube_sqlserver
 }
+
+module "rabbitmq" {
+  source        = "./tools/rabbitmq"
+  rabbitmq_enabled = var.rabbitmq_enabled
+}

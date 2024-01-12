@@ -1,0 +1,10 @@
+auth:
+  username: rabbitmq
+  password: rabbitmq
+ingress:
+  enabled: true
+  ingressClassName: apisix
+  hostname: rabbitmq.local
+  tls: []
+persistence:
+  size: 2Gi
